@@ -32,43 +32,9 @@
  .navlinks .primary{display:inline-flex!important}
 }
 @media(max-width:560px){.hero-actions button{flex:1 1 calc(50% - 8px)}.navlinks{max-height:none}}
-
-/* Acceso ENTRE CICLOS: autenticación por Supabase */
-.auth-gate{position:fixed;inset:0;z-index:1000;background:linear-gradient(135deg,#fff7ef,#f8fafc 55%,#e4f4ed);display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
-.auth-card{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 20px 60px #202b3c18}
-.auth-brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:850;margin-bottom:20px}
-.auth-card h1{font-size:27px;letter-spacing:-.8px;margin:0 0 8px}
-.auth-card>p{font-size:13px;line-height:1.6;color:var(--muted)}
-.auth-form{display:grid;gap:13px;margin-top:18px}
-.auth-form label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
-.auth-form input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;outline:none}
-.auth-switch{background:transparent;color:#a64b0b;font-weight:800;padding:8px 0}
-.auth-message{display:none;margin-top:13px;padding:12px;border-radius:11px;font-size:12px;line-height:1.5}
-.auth-message.show{display:block}.auth-message.error{background:#fde9e7;color:#922b22}.auth-message.ok{background:#e4f4ed;color:#176e51}
-.auth-foot{font-size:11px!important}
-#authSignOut{display:none}
-
 </style>
 </head>
 <body>
-
-<div class="auth-gate" id="authGate">
-  <section class="auth-card" aria-labelledby="authTitle">
-    <div class="auth-brand"><div class="logo">↻</div><div>ENTRE CICLOS<small>COMUNIDAD ACADÉMICA · PILOTO</small></div></div>
-    <h1 id="authTitle">Tu comunidad, más segura</h1>
-    <p id="authIntro">Regístrate con tu correo institucional y código de alumno para entrar a ENTRE CICLOS.</p>
-    <form class="auth-form" id="authForm">
-      <div><label for="authCode">Código de alumno (8 dígitos)</label><input id="authCode" inputmode="numeric" autocomplete="off" maxlength="8" pattern="[0-9]{8}" placeholder="Ej. 20201234" required /></div>
-      <div><label for="authEmail">Correo institucional</label><input id="authEmail" type="email" autocomplete="email" placeholder="usuario@aloe.ulima.edu.pe" required /></div>
-      <div><label for="authPassword">Contraseña (mínimo 8 caracteres)</label><input id="authPassword" type="password" minlength="8" autocomplete="current-password" required /></div>
-      <button class="primary" id="authSubmit" type="submit">Crear cuenta</button>
-    </form>
-    <button class="auth-switch" id="authToggle" type="button">¿Ya tienes cuenta? Inicia sesión</button>
-    <div class="auth-message" id="authMessage" role="status"></div>
-    <p class="auth-foot">Por seguridad, nunca ingreses aquí la contraseña de tu portal universitario. El código se guarda como dato de perfil, pero esta versión aún no consulta una lista oficial de alumnos.</p>
-  </section>
-</div>
-
 <header class="topbar"><div class="shell nav">
   <div class="brand"><div class="logo">↻</div><div>ENTRE CICLOS<small>COMUNIDAD ACADÉMICA · CONCEPTO ULIMA</small></div></div>
   <nav class="navlinks" aria-label="Navegación"><button class="active" data-page="market">Explorar</button><button data-page="matches">Encuentra tu match</button><button data-page="sos">SOS urgente</button><button data-page="myitems">Mis publicaciones</button><button data-page="rewards">Mi puntaje</button><button data-page="ranking">Ranking</button><button data-page="how">Cómo funciona</button><button class="primary" id="openPublish">+ Publicar artículo</button></nav>
@@ -125,7 +91,6 @@
 <form id="publishForm"><div class="formgrid"><div class="field full"><label for="title">Nombre del artículo *</label><input id="title" required maxlength="70" placeholder="Ej. Calculadora científica Casio" /></div><div class="field"><label for="type">¿Qué ofreces? *</label><select id="type" required><option value="Préstamo">Préstamo</option><option value="Trueque">Trueque</option><option value="Venta">Venta</option></select></div><div class="field"><label for="course">Curso o área</label><select id="course"><option>Ingeniería Industrial</option><option>Dibujo Técnico</option><option>Estadística</option><option>Química</option><option>Estudios Generales</option><option>Otro</option></select></div><div class="field" id="priceField"><label for="price">Precio (S/)</label><input id="price" type="number" min="0" step="0.5" placeholder="Ej. 25" /></div><div class="field" id="dateField"><label for="availableFrom">Disponible desde *</label><input id="availableFrom" type="date" /></div><div class="field" id="dateToField"><label for="date">Disponible hasta *</label><input id="date" type="date" /></div><div class="field full"><label for="description">Descripción y estado</label><textarea id="description" maxlength="220" placeholder="Estado, accesorios incluidos, qué buscas a cambio…"></textarea></div><div class="field"><label for="owner">Tu nombre o alias *</label><input id="owner" required maxlength="35" placeholder="Ej. Ana M." /></div><div class="field"><label for="contact">Contacto para coordinar *</label><input id="contact" required maxlength="70" placeholder="Correo universitario o contacto" /></div></div><div class="notice">Usa datos de prueba si solo estás mostrando la maqueta. En una versión real se necesitaría verificación de identidad, privacidad y un sistema seguro de contacto.</div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px"><button type="button" class="secondary" id="cancelPublish">Cancelar</button><button type="submit" class="primary">Publicar en este piloto</button></div></form></div></div>
 <div class="modal-backdrop" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="modal"><div class="modal-head"><div><h2 id="detailTitle">Artículo</h2><p id="detailSubtitle"></p></div><button class="close" id="closeDetail" aria-label="Cerrar">×</button></div><div id="detailBody"></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px"><button class="secondary" id="closeDetail2">Volver</button><button class="primary" id="requestBtn">Solicitar contacto</button></div></div></div>
 <div class="toast" id="toast" role="status"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const seedItems=[
 {id:1,title:'Calculadora científica',type:'Préstamo',course:'Estadística',price:'',availableFrom:'2026-10-26',date:'2026-11-15',description:'Funciona correctamente, incluye tapa. Ideal para prácticas y exámenes.',owner:'Lucía R.',contact:'lucia.demo@alumno.edu',emoji:'🧮',color:'',demo:true},
@@ -166,101 +131,5 @@ document.querySelectorAll('.point-action').forEach(btn=>btn.addEventListener('cl
 $('resetPoints').addEventListener('click',()=>{pointBalance=0;pointLog=[];renderPoints();toast('Puntos de demostración reiniciados.');});
 
 </script>
-
-<script>
-/* Acceso con Supabase Auth. La clave publishable es apta para el navegador;
-   la protección de los datos depende de RLS y de las políticas de la base de datos. */
-(() => {
-  const SUPABASE_URL = 'https://lutpduqzhjjvkqhpmnfk.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_eielk7zpBlN1dJBAeO7EkQ_KdjFp4O6';
-  const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-  const gate = document.getElementById('authGate');
-  const form = document.getElementById('authForm');
-  const codeInput = document.getElementById('authCode');
-  const emailInput = document.getElementById('authEmail');
-  const passwordInput = document.getElementById('authPassword');
-  const submit = document.getElementById('authSubmit');
-  const toggle = document.getElementById('authToggle');
-  const message = document.getElementById('authMessage');
-  const title = document.getElementById('authTitle');
-  const intro = document.getElementById('authIntro');
-  let mode = 'signup';
-
-  function showMessage(text, kind) {
-    message.textContent = text;
-    message.className = 'auth-message show ' + kind;
-  }
-  function setMode(next) {
-    mode = next;
-    title.textContent = mode === 'signup' ? 'Tu comunidad, más segura' : 'Qué bueno verte de nuevo';
-    intro.textContent = mode === 'signup'
-      ? 'Regístrate con tu correo institucional y código de alumno para entrar a ENTRE CICLOS.'
-      : 'Inicia sesión con el correo y la contraseña que registraste.';
-    codeInput.parentElement.style.display = mode === 'signup' ? 'block' : 'none';
-    codeInput.required = mode === 'signup';
-    submit.textContent = mode === 'signup' ? 'Crear cuenta' : 'Iniciar sesión';
-    toggle.textContent = mode === 'signup' ? '¿Ya tienes cuenta? Inicia sesión' : '¿Aún no tienes cuenta? Regístrate';
-    passwordInput.autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
-    message.className = 'auth-message';
-  }
-  toggle.addEventListener('click', () => setMode(mode === 'signup' ? 'login' : 'signup'));
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const email = emailInput.value.trim().toLowerCase();
-    const password = passwordInput.value;
-    const code = codeInput.value.trim();
-    if (mode === 'signup') {
-      if (!/^[0-9]{8}$/.test(code)) {
-        showMessage('Ingresa un código de alumno de exactamente 8 dígitos.', 'error'); return;
-      }
-      if (!email.endsWith('@aloe.ulima.edu.pe')) {
-        showMessage('Usa tu correo institucional @aloe.ulima.edu.pe.', 'error'); return;
-      }
-      if (password.length < 8) {
-        showMessage('La contraseña debe tener al menos 8 caracteres.', 'error'); return;
-      }
-    }
-    submit.disabled = true;
-    submit.textContent = 'Procesando…';
-    try {
-      if (mode === 'signup') {
-        const { data, error } = await authClient.auth.signUp({
-          email, password,
-          options: { data: { student_code: code } }
-        });
-        if (error) throw error;
-        if (data.session) {
-          gate.style.display = 'none';
-          showMessage('Cuenta creada.', 'ok');
-        } else {
-          showMessage('Te enviamos un correo de confirmación. Abre el enlace del mensaje y luego vuelve a esta página para iniciar sesión.', 'ok');
-          setMode('login');
-          emailInput.value = email;
-        }
-      } else {
-        const { error } = await authClient.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      }
-    } catch (err) {
-      let msg = err && err.message ? err.message : 'No se pudo completar la solicitud.';
-      if (/already registered|already exists/i.test(msg)) msg = 'Ese correo ya tiene una cuenta. Prueba iniciar sesión.';
-      if (/invalid login credentials/i.test(msg)) msg = 'Correo o contraseña incorrectos.';
-      showMessage(msg, 'error');
-    } finally {
-      submit.disabled = false;
-      submit.textContent = mode === 'signup' ? 'Crear cuenta' : 'Iniciar sesión';
-    }
-  });
-
-  authClient.auth.onAuthStateChange((event, session) => {
-    gate.style.display = session ? 'none' : 'flex';
-  });
-  authClient.auth.getSession().then(({ data }) => {
-    gate.style.display = data.session ? 'none' : 'flex';
-  });
-})();
-</script>
-
 </body>
 </html>
